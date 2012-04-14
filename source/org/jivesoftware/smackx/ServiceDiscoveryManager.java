@@ -778,8 +778,8 @@ public class ServiceDiscoveryManager {
         public void capsVerUpdated(String ver) {
             // Send an empty presence, and let the packet interceptor
             // add a <c/> node to it.
-            if (((XMPPConnection)connection).isAuthenticated() &&
-                    (((XMPPConnection)connection).isSendPresence() ||
+            if (((Connection)connection).isAuthenticated() &&
+                    (((Connection)connection).isSendPresence() ||
                      isSendPresence())) {
                 Presence presence = new Presence(Presence.Type.available);
                 connection.sendPacket(presence);

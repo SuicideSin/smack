@@ -198,6 +198,8 @@ public abstract class Connection {
      */
     protected final ConnectionConfiguration config;
 
+    protected String connectionID = null;
+
     /**
      * Create a new Connection to a XMPP server.
      * 
@@ -880,5 +882,10 @@ public abstract class Connection {
                 packetInterceptor.interceptPacket(packet);
             }
         }
+    }
+
+    public boolean isAddFrom() {
+        // TODO Auto-generated method stub
+        return false;
     }
 }

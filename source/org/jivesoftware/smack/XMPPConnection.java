@@ -57,9 +57,8 @@ public class XMPPConnection extends Connection {
      */
     Socket socket;
 
-    String connectionID = null;
     private String user = null;
-    private boolean connected = false;
+    protected boolean connected = false;
     private boolean socketClosed = false;
     /**
      * Flag that indicates if the user is currently authenticated with the server.

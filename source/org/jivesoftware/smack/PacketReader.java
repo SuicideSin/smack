@@ -42,14 +42,14 @@ import java.util.concurrent.*;
  */
 class PacketReader {
 
-    private Thread readerThread;
+    protected Thread readerThread;
     private ExecutorService listenerExecutor;
 
     private XMPPConnection connection;
-    private XmlPullParser parser;
-    private boolean done;
+    protected XmlPullParser parser;
+    protected boolean done;
 
-    private String connectionID = null;
+    protected String connectionID = null;
     private Semaphore connectionSemaphore;
 
     protected PacketReader(final XMPPConnection connection) {
@@ -343,7 +343,7 @@ class PacketReader {
      * 3) TLS negotiation was successful
      *
      */
-    private void releaseConnectionIDLock() {
+    protected void releaseConnectionIDLock() {
         connectionSemaphore.release();
     }
 
@@ -354,7 +354,7 @@ class PacketReader {
      *
      * @param packet the packet to process.
      */
-    private void processPacket(Packet packet) {
+    protected void processPacket(Packet packet) {
         if (packet == null) {
             return;
         }

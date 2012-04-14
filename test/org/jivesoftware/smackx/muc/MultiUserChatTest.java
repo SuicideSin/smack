@@ -247,7 +247,7 @@ public class MultiUserChatTest extends SmackTestCase {
             // Anonymous user joins the new room
             ConnectionConfiguration connectionConfiguration =
                     new ConnectionConfiguration(getHost(), getPort(), getServiceName());
-            XMPPConnection anonConnection = new XMPPConnection(connectionConfiguration);
+            Connection anonConnection = new XMPPConnection(connectionConfiguration);
             anonConnection.connect();
             anonConnection.loginAnonymously();
             MultiUserChat muc2 = new MultiUserChat(anonConnection, room);
@@ -1757,7 +1757,7 @@ public class MultiUserChatTest extends SmackTestCase {
 
     public void testManyResources() throws Exception {
             // Create 5 more connections for user2
-            XMPPConnection[] conns = new XMPPConnection[5];
+            Connection[] conns = new Connection[5];
             for (int i = 0; i < conns.length; i++) {
                 ConnectionConfiguration connectionConfiguration =
                         new ConnectionConfiguration(getHost(), getPort(), getServiceName());
