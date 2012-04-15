@@ -49,7 +49,7 @@ import org.jivesoftware.smackx.packet.DiscoverItems;
  *
  * @author Jonas Ådahl
  */
-public class LLServiceDiscoveryManager extends ServiceDiscoveryManager {
+public class LLServiceDiscoveryManager implements ServiceDiscoveryManagerInterface {
     private static Map<LLService,LLServiceDiscoveryManager> serviceManagers =
         new ConcurrentHashMap<LLService,LLServiceDiscoveryManager>();
 
@@ -66,18 +66,16 @@ public class LLServiceDiscoveryManager extends ServiceDiscoveryManager {
         XMPPLLConnection.addLLConnectionListener(new ConnectionServiceMaintainer());
     }*/
 
-// FIXME
-//    static {
-//        LLService.addLLServiceListener(new LLServiceListener() {
-//            public void serviceCreated(LLService service) {
-//                addLLServiceDiscoveryManager(
-//                    new LLServiceDiscoveryManager(service));
-//            }
-//        });
-//    }
+    static {
+        LLService.addLLServiceListener(new LLServiceListener() {
+            public void serviceCreated(LLService service) {
+                addLLServiceDiscoveryManager(
+                    new LLServiceDiscoveryManager(service));
+            }
+        });
+    }
 
-    private LLServiceDiscoveryManager(LLService llservice, Connection connection) {
-        super(connection);
+    private LLServiceDiscoveryManager(LLService llservice) {
         this.service = llservice;
 
         // Add LLService state listener

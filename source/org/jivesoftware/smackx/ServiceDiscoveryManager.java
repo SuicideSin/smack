@@ -49,7 +49,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * 
  * @author Gaston Dombiak
  */
-public class ServiceDiscoveryManager {
+public class ServiceDiscoveryManager implements ServiceDiscoveryManagerInterface {
 
     private static String identityName = "Smack";
     private static String identityType = "pc";
