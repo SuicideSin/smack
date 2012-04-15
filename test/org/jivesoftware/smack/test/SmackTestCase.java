@@ -279,7 +279,7 @@ public abstract class SmackTestCase extends TestCase {
     	if (passwordPrefix != null)
     		password = (samePassword ? passwordPrefix : passwordPrefix + (connectionIndex + 1));
 
-    	XMPPConnection con = getConnection(connectionIndex);
+    	Connection con = getConnection(connectionIndex);
     	
     	if (!con.isConnected())
     		con.connect();

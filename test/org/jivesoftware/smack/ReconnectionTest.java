@@ -109,7 +109,7 @@ public class ReconnectionTest extends SmackTestCase {
      * Closes the connection and then reconnects.
      */
     public void testCloseAndManualReconnection() throws Exception {
-        XMPPConnection connection = getConnection(0);
+        Connection connection = getConnection(0);
         String username = connection.getConfiguration().getUsername();
         String password = connection.getConfiguration().getPassword();
         ConnectionTestListener listener = new ConnectionTestListener();
@@ -155,8 +155,8 @@ public class ReconnectionTest extends SmackTestCase {
         assertEquals("Failed the manual connection", true, connection.isAnonymous());
     }
 
-    private XMPPConnection createXMPPConnection() throws Exception {
-        XMPPConnection connection;
+    private Connection createXMPPConnection() throws Exception {
+        Connection connection;
         // Create the configuration
         ConnectionConfiguration config = new ConnectionConfiguration(getHost(), getPort());
         config.setCompressionEnabled(Boolean.getBoolean("test.compressionEnabled"));

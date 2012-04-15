@@ -51,7 +51,6 @@ public class DummyConnection extends Connection {
     private boolean anonymous = false;
 
     private String user;
-    private String connectionID;
     private Roster roster;
 
     private final BlockingQueue<Packet> queue = new LinkedBlockingQueue<Packet>();

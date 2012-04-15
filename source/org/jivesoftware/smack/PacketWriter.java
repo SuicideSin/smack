@@ -258,6 +258,9 @@ class PacketWriter {
         StringBuilder stream = new StringBuilder();
         stream.append("<stream:stream");
         stream.append(" to=\"").append(connection.getServiceName()).append("\"");
+        if (connection.isAddFrom()) {
+            stream.append(" from=\"").append(connection.getUser()).append("\"");
+        }
         stream.append(" xmlns=\"jabber:client\"");
         stream.append(" xmlns:stream=\"http://etherx.jabber.org/streams\"");
         stream.append(" version=\"1.0\">");
