@@ -125,7 +125,7 @@ public class XMPPLLConnection extends XMPPConnection // public for debugging rea
      * @param serviceName the name of the service
      */
     public void setServiceName(String serviceName) {
-        config.setServiceName(remotePresence.getServiceName());
+        config.setServiceName(serviceName);
     }
 
 

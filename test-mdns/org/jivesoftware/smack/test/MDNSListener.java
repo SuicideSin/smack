@@ -21,7 +21,7 @@ public class MDNSListener implements LLPresenceListener {
     }
 
 
-    public void connectionCreated(AbstractConnection connection) {
+    public void connectionCreated(Connection connection) {
         System.err.println("Notification about a connection that was created...");
     }
 }

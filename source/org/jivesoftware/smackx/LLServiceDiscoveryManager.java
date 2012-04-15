@@ -66,7 +66,7 @@ public class LLServiceDiscoveryManager implements ServiceDiscoveryManagerInterfa
         XMPPLLConnection.addLLConnectionListener(new ConnectionServiceMaintainer());
     }*/
 
-    static {
+    public static void addServiceListener() {
         LLService.addLLServiceListener(new LLServiceListener() {
             public void serviceCreated(LLService service) {
                 addLLServiceDiscoveryManager(

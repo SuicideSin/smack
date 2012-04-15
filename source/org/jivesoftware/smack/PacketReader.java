@@ -217,7 +217,7 @@ class PacketReader {
      *
      * @param thread the thread that is being used by the reader to parse incoming packets.
      */
-    private void parsePackets(Thread thread) {
+    protected void parsePackets(Thread thread) {
         try {
             int eventType = parser.getEventType();
             do {

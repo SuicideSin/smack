@@ -43,7 +43,7 @@ public class TestMDNS {
             // Create some kind of user name
             String name = "smack-mdns@localhost";
             try {
-                name = System.getenv("USERNAME") + "@" + java.net.InetAddress.getLocalHost().getHostName();
+                name = System.getenv("USER") + "@" + java.net.InetAddress.getLocalHost().getHostName();
             } catch (Exception e) {}
 
             System.out.println("Link-local presence name set to '" + name + "'");
@@ -52,6 +52,8 @@ public class TestMDNS {
 
             System.out.println("Initiating Link-local service...");
             // Create a XMPP Link-local service.
+            LLServiceDiscoveryManager.addServiceListener();
+            
             service = JmDNSService.create(presence);
             service.addServiceStateListener(new LLServiceStateListener() {
                 public void serviceNameChanged(String newName, String oldName) {
@@ -113,7 +115,7 @@ public class TestMDNS {
                         done = true;
                     else if ("spam".equals(line)) {
                         service.spam();
-                        ServiceDiscoveryManager.spam();
+//                        ServiceDiscoveryManager.spam();
                     }
                     else if ("msg".equals(line)) {
                         System.out.print("Enter user: ");
