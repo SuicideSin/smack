@@ -77,6 +77,7 @@ public class JmDNSService extends LLService implements ServiceNameListener {
     public void close() {
         super.close();
         jmdns.close();
+        jmdns = null;
     }
 
     /**
