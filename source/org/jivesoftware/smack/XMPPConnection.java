@@ -385,13 +385,56 @@ public class XMPPConnection extends Connection {
      */
     public void quickShutdown() {
         try {
+            this.setWasAuthenticated(authenticated);
+            authenticated = false;        
+            
+            // Close socket before we close writer, so that stream end is not sent and reconnection is possible.
+            // This may cause a ConnectionClosedOnError notification to go out.
+            socketClosed = true;
             try {
                 socket.shutdownInput();
             }
             catch (Exception e) {
             }
-            socket.close();
-            shutdown(new org.jivesoftware.smack.packet.Presence(org.jivesoftware.smack.packet.Presence.Type.unavailable));
+            try {
+                socket.close();
+            } catch (Exception e) {
+            }
+
+            if (packetReader!=null){
+                // Does not notify listeners 
+                packetReader.quickShutdown();
+            }
+            if (packetWriter!=null){
+                packetWriter.shutdown();
+            }
+            // Wait 150 ms for processes to clean-up, then shutdown.
+            try {
+                Thread.sleep(150);
+            }
+            catch (Exception e) {
+                // Ignore.
+            }
+            
+            connected = false;
+            
+            // Close down the readers and writers.
+            if (reader != null) {
+                try {
+                    reader.close();
+                }
+                catch (Throwable ignore) { /* ignore */ }
+                reader = null;
+            }
+            if (writer != null) {
+                try {
+                    writer.close();
+                }
+                catch (Throwable ignore) { /* ignore */ }
+                writer = null;
+            }
+
+            saslAuthentication.init();
         }
         catch (Exception e) {
             System.err.println(e);
