@@ -212,10 +212,20 @@ public class XMPPConnection extends Connection {
             response = new NonSASLAuthentication(this).authenticate(username, password, resource);
         }
 
-        // Set the user.
+        // If compression is enabled then request the server to use stream compression
+        if (config.isCompressionEnabled()) {
+            useCompression();
+        }
+
+        // Indicate that we're now authenticated.
+        authenticated = true;
+        anonymous = false;
+
+        // If we did not bind, don't attempt to do anything with roster or presence
         if (resource == null)
             return;
 
+        // Set the user.
         if (response != null) {
             this.user = response;
             // Update the serviceName with the one returned by the server
@@ -227,15 +237,6 @@ public class XMPPConnection extends Connection {
                 this.user += "/" + resource;
             }
         }
-
-        // If compression is enabled then request the server to use stream compression
-        if (config.isCompressionEnabled()) {
-            useCompression();
-        }
-
-        // Indicate that we're now authenticated.
-        authenticated = true;
-        anonymous = false;
 
         // Create the roster if it is not a reconnection or roster already created by getRoster()
         if (this.roster == null) {
