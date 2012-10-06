@@ -667,8 +667,10 @@ public class PacketParserUtils {
     /**
      * Parses stream error packets.
      *
+     * <p>If there are multiple stream errors, ignores "text" ones.
+     *
      * @param parser the XML parser.
-     * @return an stream error packet.
+     * @return a stream error packet.
      * @throws Exception if an exception occurs while parsing the packet.
      */
     public static StreamError parseStreamError(XmlPullParser parser) throws IOException,
@@ -678,7 +680,9 @@ public class PacketParserUtils {
     while (!done) {
         int eventType = parser.next();
 
-        if (eventType == XmlPullParser.START_TAG) {
+        if (eventType == XmlPullParser.START_TAG &&
+                (streamError == null || "text".equals(streamError.getCode()))
+                ) {
             streamError = new StreamError(parser.getName());
         }
         else if (eventType == XmlPullParser.END_TAG) {
