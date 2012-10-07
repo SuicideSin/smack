@@ -18,6 +18,9 @@ package org.jivesoftware.smack;
 
 import org.jivesoftware.smack.util.Tuple;
 
+import java.net.Inet4Address;
+import java.net.Inet6Address;
+import java.net.InetAddress;
 import java.util.List;
 import java.util.LinkedList;
 import java.util.Map;
@@ -62,19 +65,26 @@ public class LLPresence {
     // Host details
     private int port = 0;
     private String host;
+    private String host6; // Currently unused
     private String serviceName;
 
     public LLPresence(String serviceName) {
         this.serviceName = serviceName;
     }
 
-    public LLPresence(String serviceName, String host, int port) {
+    public LLPresence(String serviceName, InetAddress host, int port) {
         this.serviceName = serviceName;
-        this.host = host;
+        if (host instanceof Inet4Address) {
+            this.host = host.getHostAddress();
+        } else if (host instanceof Inet6Address) {
+            this.host6 = host.getHostAddress();
+        } else {
+            throw new UnsupportedOperationException();
+        }
         this.port = port;
     }
 
-    public LLPresence(String serviceName, String host, int port,
+    public LLPresence(String serviceName, InetAddress host, int port,
             List<Tuple<String,String>> records) {
         this(serviceName, host, port);
 
@@ -270,5 +280,19 @@ public class LLPresence {
 
     public int hashCode() {
         return serviceName.hashCode();
+    }
+
+    /** Update from an old presence, in case it has host information that we are missing (e.g. ipv4 address) */
+    public void updateFrom(LLPresence other) {
+        if (other == null)
+            return;
+        
+        if (host6 == null) {
+            host6 = other.host6;
+        }
+        
+        if (host == null) {
+            host = other.host;
+        }
     }
 }

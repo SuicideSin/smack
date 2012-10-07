@@ -111,7 +111,7 @@ class JmDNSPresenceDiscoverer extends LLPresenceDiscoverer {
         public void serviceResolved(ServiceEvent event) {
             presenceInfoAdded(event.getName(),
                     new LLPresence(event.getName(),
-                        event.getInfo().getHostAddress(), event.getInfo().getPort(),
+                        event.getInfo().getAddress(), event.getInfo().getPort(),
                         TXTListToXMPPRecords(TXTToList(event.getInfo().getTextBytes()))));
         }
 

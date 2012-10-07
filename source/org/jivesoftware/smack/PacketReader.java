@@ -163,7 +163,7 @@ class PacketReader {
     void notifyConnectionError(Exception e) {
         done = true;
         // Closes the connection temporary. A reconnection is possible
-        connection.shutdown(new Presence(Presence.Type.unavailable));
+        connection.quickShutdown();
         // Print the stack trace to help catch the problem
         e.printStackTrace();
         // Notify connection listeners of the error.
@@ -482,5 +482,12 @@ class PacketReader {
                 listenerWrapper.notifyListener(packet);
             }
         }
+    }
+
+    public void quickShutdown() {
+        done = true;
+
+        // Shut down the listener executor.
+        listenerExecutor.shutdown();
     }
 }

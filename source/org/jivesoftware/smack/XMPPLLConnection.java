@@ -456,4 +456,9 @@ public class XMPPLLConnection extends XMPPConnection // public for debugging rea
         packetReader.cleanup();
         packetReader = null;
     }
+    
+    @Override
+    public boolean isAddFrom() {
+        return true;
+    }
 }

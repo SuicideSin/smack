@@ -16,10 +16,6 @@
 
 package org.jivesoftware.smack;
 
-import javax.jmdns.JmDNS;
-import javax.jmdns.ServiceEvent;
-import javax.jmdns.ServiceListener;
-
 import java.util.Set;
 import java.util.Collection;
 import java.util.Map;
@@ -92,6 +88,7 @@ public abstract class LLPresenceDiscoverer {
      * @param presence presence information.
      */
     protected void presenceInfoAdded(String name, LLPresence presence) {
+        presence.updateFrom(presences.get(name));
         presences.put(name, presence);
         for (LLPresenceListener l : listeners)
             l.presenceNew(presence);
