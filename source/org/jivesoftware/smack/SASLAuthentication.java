@@ -410,7 +410,7 @@ public class SASLAuthentication implements UserAuthentication {
 
             if (saslNegotiated) {
                 // Bind a resource for this connection and
-                return bindResourceAndEstablishSession(null);
+                return bindResourceAndEstablishSession("");
             }
             else {
                 return new NonSASLAuthentication(connection).authenticateAnonymously();
@@ -421,6 +421,9 @@ public class SASLAuthentication implements UserAuthentication {
     }
 
     private String bindResourceAndEstablishSession(String resource) throws XMPPException {
+	// do not bind if null resource. use "" instead
+	if (resource == null)
+	    return null;
         // Wait until server sends response containing the <bind> element
         synchronized (this) {
             if (!resourceBinded) {
