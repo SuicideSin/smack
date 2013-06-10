@@ -673,10 +673,6 @@ public class XMPPConnection extends Connection {
                     listener.connectionCreated(this);
                 }
             }
-            else if (!wasAuthenticated) {
-                packetReader.notifyReconnection();
-            }
-
         }
         catch (XMPPException ex) {
             // An exception occurred in setting up the connection. Make sure we shut down the
