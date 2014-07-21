@@ -26,6 +26,7 @@ import org.jivesoftware.smack.packet.Presence;
 import org.jivesoftware.smack.packet.XMPPError;
 import org.jivesoftware.smack.util.StringUtils;
 
+import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
@@ -897,6 +898,10 @@ public class XMPPConnection extends Connection {
         initReaderAndWriter();
         // Proceed to do the handshake
         ((SSLSocket) socket).startHandshake();
+        // Verify the server hostname
+        HostnameVerifier verifier = this.config.getHostnameVerifier();
+	if (verifier != null && !verifier.verify(getServiceName(), ((SSLSocket) socket).getSession()))
+                throw new XMPPException("Server could not authenticate as '" + getServiceName() + "'.");
         //if (((SSLSocket) socket).getWantClientAuth()) {
         //    System.err.println("Connection wants client auth");
         //}
