@@ -26,6 +26,7 @@ import org.jivesoftware.smack.util.DNSUtil;
 import javax.net.SocketFactory;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
++import javax.net.ssl.SSLSocket;
 import javax.security.auth.callback.CallbackHandler;
 import java.io.File;
 
@@ -66,6 +67,8 @@ public class ConnectionConfiguration implements Cloneable {
     private String capsNode = null;
     private SSLContext customSSLContext;
     private HostnameVerifier tlsHostnameVerifier;
+
+    private String[] cipherSuites;
 
     private boolean compressionEnabled = false;
 
@@ -806,4 +809,24 @@ public class ConnectionConfiguration implements Cloneable {
         this.password = password;
         this.resource = resource;
     }
+
+    
+    /**
+     * Set the allowed TLS cipher suites for this connection
+     * @see SSLSocket#setEnabledCipherSuites(String[])
+     * @see http://docs.oracle.com/javase/7/docs/technotes/guides/security/SunProviders.html#SunJSSEProvider
+     * @param ciphers the list of TLS cipher suites
+     */
+    public void setEnabledCipherSuites( final String[] ciphers ) {
+        this.cipherSuites = ciphers;
+    }
+    
+    /**
+     * Get the list of TLS ciphers to be used for connection.
+     * @return The list of cipher suites.
+     */
+    public String[] getEnabledCipherSuites() {
+        return this.cipherSuites;
+    }
+
 }

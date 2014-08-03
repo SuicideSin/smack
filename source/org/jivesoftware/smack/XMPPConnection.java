@@ -896,6 +896,13 @@ public class XMPPConnection extends Connection {
         socket.setKeepAlive(true);
         // Initialize the reader and writer with the new secured version
         initReaderAndWriter();
+
+        
+        final String[] ciphers = config.getEnabledCipherSuites();
+        if ( ciphers != null ) {
+            ((SSLSocket) socket).setEnabledCipherSuites( ciphers );
+        }
+
         // Proceed to do the handshake
         ((SSLSocket) socket).startHandshake();
         // Verify the server hostname
