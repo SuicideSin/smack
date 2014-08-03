@@ -26,7 +26,7 @@ import org.jivesoftware.smack.util.DNSUtil;
 import javax.net.SocketFactory;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
-+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocket;
 import javax.security.auth.callback.CallbackHandler;
 import java.io.File;
 
